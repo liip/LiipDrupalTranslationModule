@@ -1,0 +1,6 @@
+vendor/
+build/
+
+# Ingore IDE specifics
+## phpStrom
+.idea

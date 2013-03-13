@@ -1,0 +1,23 @@
+{
+    "name": "liip/drupaltranslationmodule",
+    "description": "The translation module provides an API to manuipulate the phrases and keys of the translation ability in Drupal 7.",
+    "type": "drupal-module",
+    "minimum-stability": "dev",
+    "license": "MIT",
+    "keywords": [ "Drupal", "translation", "Drupal 7"],
+
+    "authors": [
+        {
+            "name": "Bastian Feder",
+            "email": "bastian.feder@liip.ch",
+            "role": "maintainer"
+        }
+    ],
+
+    "require": {
+       "php": ">=5.3,<5.4",
+       "composer/installers": "v1.0.0",
+        "liip/drupalconnectormodule": "dev-master",
+        "beberlei/assert": "dev-master"
+    }
+}

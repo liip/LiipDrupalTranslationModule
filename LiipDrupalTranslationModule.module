@@ -1,0 +1,179 @@
+<?php
+
+use Assert\Assertion;
+use Liip\Drupal\Modules\DrupalConnector\ConnectorFactory;
+
+/**
+ * Modifies a translation source in the set of translations.
+ *
+ * @param array $data
+ * @throws \InvalidArgumentException
+ */
+function LiipDrupalTranslationModule_modifyTranslationSource($source, array $data)
+{
+    /** @var \Liip\Drupal\Modules\DrupalConnector\ConnectorFactory $factory  */
+    $factory = new ConnectorFactory();
+
+    _LiipDrupalTranslationModule_verifyDataSet($data);
+
+    if (! _LiipDrupalTranslationModule_translation_source_exist($source, $factory)) {
+        throw new InvalidArgumentException('Translation source ('. $source .') does not exists!');
+    }
+
+    _LiipDrupalTranslationModule_replaceKey($source, $data, $factory);
+}
+
+/**
+ * Adds a translation source to the list of translation keys used by the t function of drupal.
+ *
+ * @param array $data
+ * @throws \InvalidArgumentException
+ */
+function LiipDrupalTranslationModule_storeTranslationSource(array $data)
+{
+    /** @var \Liip\Drupal\Modules\DrupalConnector\ConnectorFactory $factory  */
+    $factory = new ConnectorFactory();
+
+    _LiipDrupalTranslationModule_verifyDataSet($data);
+
+    if (_LiipDrupalTranslationModule_translation_source_exist($data['source'], $factory)) {
+        throw new InvalidArgumentException('Translation source ('. $data['source'] .') already exists!');
+    }
+
+    _LiipDrupalTranslationModule_addKey($data, $factory);
+}
+
+/**
+ * Verifies that the given data set meet the expectations.
+ *
+ * @param array $data
+ */
+function _LiipDrupalTranslationModule_verifyDataSet(array $data)
+{
+    /** @var \Assert\Assertion $assertions  */
+    $assertions = new Assertion();
+
+    $assertions->notEmpty($data['source'], 'The passed variable representing the translation key must not be empty.');
+}
+
+/**
+ * Determines, if the given key is already registered in the translation database table.
+ *
+ * @param string $source
+ * @param Liip\Drupal\Modules\DrupalConnector\ConnectorFactory $factory
+ *
+ * @return bool
+ */
+function _LiipDrupalTranslationModule_translation_source_exist($source, ConnectorFactory $factory)
+{
+    $lid = _LiipDrupalTranslationModule_get_translation_source_lid($source, $factory);
+    return (false === $lid) ? false : true;
+}
+
+/**_LiipDrupalTranslationModule_get_translation_source_lid
+ * Provides the unique database identifier of the provided translation source.
+ *
+ * @param string $source
+ * @param Liip\Drupal\Modules\DrupalConnector\ConnectorFactory $factory
+ *
+ * @return integer|false
+ */
+function _LiipDrupalTranslationModule_get_translation_source_lid($source, ConnectorFactory $factory)
+{
+    /** @var $dcdb  */
+    $dcdb = $factory->getDatabaseConnector();
+
+    return $dcdb->db_query(
+        "SELECT lid
+          FROM {locales_source}
+         WHERE source LIKE :source",
+
+        array(':source' => $source)
+
+    )->fetchField();
+}
+
+/**
+ * Adds a translation source to the drupal database.
+ *
+ * @param array $data
+ * @param Liip\Drupal\Modules\DrupalConnector\ConnectorFactory $factory
+ *
+ * @return boolean
+ */
+function _LiipDrupalTranslationModule_addKey(array $data, ConnectorFactory $factory)
+{
+    /** @var \Liip\Drupal\Modules\DrupalConnector\Database $dcdb  */
+    $dcdb = $factory->getDatabaseConnector();
+
+    $data = _LiipDrupalTranslationModule_initFieldset($data);
+
+    return $dcdb
+        ->db_insert('locales_source')
+        ->fields(array(
+            'location' => $data['location'],
+            'textgroup' => $data['textgroup'],
+            'source' => $data['source'],
+            'context' => $data['context'],
+            'version' => $data['version'],
+        ))
+        ->execute();
+}
+
+/**
+ * Replaces a translation source in the drupal database.
+ *
+ * @param array $data
+ * @param Liip\Drupal\Modules\DrupalConnector\ConnectorFactory $factory
+ *
+ * @return boolean
+ */
+function _LiipDrupalTranslationModule_replaceKey($source, array $data, ConnectorFactory $factory)
+{
+    /** @var \Liip\Drupal\Modules\DrupalConnector\Database $dcdb  */
+    $dcdb = $factory->getDatabaseConnector();
+
+    $data = _LiipDrupalTranslationModule_initFieldset($data);
+
+    return $dcdb
+        ->db_update('locales_source')
+        ->fields(array(
+            'location' => $data['location'],
+            'textgroup' => $data['textgroup'],
+            'source' => $data['source'],
+            'context' => $data['context'],
+            'version' => $data['version'],
+        ))
+        ->condition('source', $source, '=')
+        ->execute();
+}
+
+/**
+ * @param array $data
+ * @return array
+ *
+ * @throws \InvalidArgumentException
+ */
+function _LiipDrupalTranslationModule_initFieldset(array $data)
+{
+    $default = array(
+        'location' => null,
+        'textgroup' => 'default',
+        'source' => '',
+        'context' => '',
+        'version' => 'none',
+    );
+
+    foreach($default as $field => $value) {
+
+        if ($field == 'source' && empty($data[$field])) {
+            throw new InvalidArgumentException('Source of the translation to be stored must not be empty.');
+        }
+
+        if (empty($data[$field])) {
+            $data[$field] = $value;
+        }
+    }
+
+    return $data;
+}
