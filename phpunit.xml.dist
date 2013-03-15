@@ -23,21 +23,18 @@
     </logging>
 
     <filter>
-        <whitelist>
-            <directory>.</directory>
-            <exclude>
-                <file>*.info</file>
-                <file>*.module</file>
+        <blacklist>
+            <file>*.info</file>
 
-                <directory>Tests</directory>
-                <directory>build</directory>
-                <directory>sites</directory>
-                <directory>templates</directory>
-                <directory>vendor</directory>
-                <directory>translations</directory>
+            <directory>Tests</directory>
+            <directory>build</directory>
+            <directory>sites</directory>
+            <directory>templates</directory>
+            <directory>vendor</directory>
+            <directory>translations</directory>
+            <directory>modules</directory>
 
-            </exclude>
-        </whitelist>
+        </blacklist>
     </filter>
 
 </phpunit>

@@ -19,4 +19,11 @@ if (file_exists($moduleDir . "/vendor/autoload.php")) {
     );
 }
 
+$loader->addClassMap(
+    array(
+        'Liip\Drupal\Modules\Translation\Tests\LiipDrupalTranslationModuleTestCase'
+            => $moduleDir .'/Tests/LiipDrupalTranslationModuleTestCase.php',
+    )
+);
+
 require_once $moduleDir . "/LiipDrupalTranslationModule.module";
