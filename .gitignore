@@ -1,6 +1,8 @@
 vendor/
 build/
 
+.gitignore
+
 # Ingore IDE specifics
 ## phpStrom
 .idea
