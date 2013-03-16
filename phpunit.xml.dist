@@ -17,24 +17,4 @@
         </testsuite>
     </testsuites>
 
-    <logging>
-        <log type="coverage-html" target="build/coverage" title="Liip Drupal Translation Module"
-             charset="UTF-8" yui="true" highlight="true"/>
-    </logging>
-
-    <filter>
-        <blacklist>
-            <file>*.info</file>
-
-            <directory>Tests</directory>
-            <directory>build</directory>
-            <directory>sites</directory>
-            <directory>templates</directory>
-            <directory>vendor</directory>
-            <directory>translations</directory>
-            <directory>modules</directory>
-
-        </blacklist>
-    </filter>
-
 </phpunit>
