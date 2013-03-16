@@ -44,7 +44,6 @@ class LiipDrupalTranslationModuleTest extends LiipDrupalTranslationModuleTestCas
             ->will($this->returnValue($lid));
 
         $dcdb = $this->getDrupalDatabaseConnectorMock(array('db_query'));
-
         $dcdb
             ->expects($this->once())
             ->method('db_query')
@@ -66,5 +65,36 @@ class LiipDrupalTranslationModuleTest extends LiipDrupalTranslationModuleTestCas
             'translation exists (lid < 0)' => array(true, -42),
             'translation does not exist' => array(false, false),
         );
+    }
+
+    public function testAddKey()
+    {
+        $query = $this->getMockBuilder('\\stdClass')
+            ->setMethods(array('fields', 'execute'))
+            ->getMock();
+        $query
+            ->expects($this->once())
+            ->method('fields')
+            ->with(
+                $this->isType('array')
+            )
+            ->will($this->returnValue($query));
+        $query
+            ->expects($this->once())
+            ->method('execute');
+
+        $dcdb = $this->getDrupalDatabaseConnectorMock(array('db_insert'));
+        $dcdb
+            ->expects($this->once())
+            ->method('db_insert')
+            ->will($this->returnValue($query));
+
+        $factory = $this->getDrupalConnectorFactoryMock(array('getDatabaseConnector'));
+        $factory
+            ->staticExpects($this->once())
+            ->method('getDatabaseConnector')
+            ->will($this->returnValue($dcdb));
+
+        _LiipDrupalTranslationModule_addKey(array('source' => 'Tux'), $factory);
     }
 }
