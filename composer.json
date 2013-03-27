@@ -11,6 +11,11 @@
             "name": "Bastian Feder",
             "email": "bastian.feder@liip.ch",
             "role": "maintainer"
+        },
+        {
+            "name": "Patrick Jezek",
+            "email": "patrick.jezek@liip.ch",
+            "role": "maintainer"
         }
     ],
 
