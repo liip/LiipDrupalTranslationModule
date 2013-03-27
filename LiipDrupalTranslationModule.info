@@ -1,5 +1,5 @@
 name = Liip Drupal Translation Module
-description = PRovides an API to the translation ability of Drupal 7.
+description = Provides an API to the translation ability of Drupal 7.
 package = Liip Drupal Modules
 core = 7.x
 php = 5.3
