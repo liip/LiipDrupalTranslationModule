@@ -1,6 +1,10 @@
 # Liip Drupal Translation Module
 This module provides an API to the translation ability of Drupal 7.
 
+##Current Travis Status
+
+[![Build Status](https://travis-ci.org/liip/LiipDrupalTranslationModule.png?branch=master)](https://travis-ci.org/liip/LiipDrupalTranslationModule)
+
 ### Composer
 Add the following lines to your `composer.json` file and update your project's composer installation.
 
