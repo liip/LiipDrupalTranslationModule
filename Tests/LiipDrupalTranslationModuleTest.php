@@ -19,7 +19,7 @@ class LiipDrupalTranslationModuleTest extends LiipDrupalTranslationModuleTestCas
             'source' => 'tux',
         );
 
-        $this->assertEquals($expected, _LiipDrupalTranslationModule_initFieldset($data));
+        $this->assertEquals($expected, _drupaltranslationmodule_initFieldset($data));
     }
 
     /**
@@ -27,7 +27,7 @@ class LiipDrupalTranslationModuleTest extends LiipDrupalTranslationModuleTestCas
      */
     public function testInitFieldsetExpectingExceptionThrown()
     {
-        _LiipDrupalTranslationModule_initFieldset(array());
+        _drupaltranslationmodule_initFieldset(array());
     }
 
     /**
@@ -55,7 +55,7 @@ class LiipDrupalTranslationModuleTest extends LiipDrupalTranslationModuleTestCas
             ->method('getDatabaseConnector')
             ->will($this->returnValue($dcdb));
 
-        $this->assertEquals($expected, _LiipDrupalTranslationModule_translation_source_exist('Tux', $factory));
+        $this->assertEquals($expected, _drupaltranslationmodule_translation_source_exist('Tux', $factory));
     }
     public static function translationSourceExistsDataprovider()
     {
@@ -95,6 +95,6 @@ class LiipDrupalTranslationModuleTest extends LiipDrupalTranslationModuleTestCas
             ->method('getDatabaseConnector')
             ->will($this->returnValue($dcdb));
 
-        _LiipDrupalTranslationModule_addKey(array('source' => 'Tux'), $factory);
+        _drupaltranslationmodule_addKey(array('source' => 'Tux'), $factory);
     }
 }
