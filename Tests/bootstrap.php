@@ -25,5 +25,3 @@ $loader->addClassMap(
             => $moduleDir .'/Tests/LiipDrupalTranslationModuleTestCase.php',
     )
 );
-
-require_once $moduleDir . "/LiipDrupalTranslationModule.module";
