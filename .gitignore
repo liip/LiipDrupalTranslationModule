@@ -1,8 +1,6 @@
 vendor/
 build/
 
-composer.lock
-
 # Ingore IDE specifics
 ## phpStrom
 .idea
