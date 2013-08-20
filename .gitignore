@@ -1,5 +1,6 @@
-vendor/
 build/
+modules/
+vendor/
 
 # Ingore IDE specifics
 ## phpStrom

@@ -6,21 +6,23 @@ use Liip\Drupal\Modules\DrupalConnector\ConnectorFactory;
 /**
  * Modifies a translation source in the set of translations.
  *
+ * @param string $source
  * @param array $data
- * @throws \InvalidArgumentException
+ *
+ * @throws InvalidArgumentException
  */
-function LiipDrupalTranslationModule_modifyTranslationSource($source, array $data)
+function drupaltranslationmodule_modifyTranslationSource($source, array $data)
 {
     /** @var \Liip\Drupal\Modules\DrupalConnector\ConnectorFactory $factory  */
     $factory = new ConnectorFactory();
 
-    _LiipDrupalTranslationModule_verifyDataSet($data);
+    _drupaltranslationmoduleverifyDataSet($data);
 
-    if (! _LiipDrupalTranslationModule_translation_source_exist($source, $factory)) {
+    if (! _drupaltranslationmodule_translation_source_exist($source, $factory)) {
         throw new InvalidArgumentException('Translation source ('. $source .') does not exists!');
     }
 
-    _LiipDrupalTranslationModule_replaceKey($source, $data, $factory);
+    _drupaltranslationmodule_replaceKey($source, $data, $factory);
 }
 
 /**
@@ -29,18 +31,18 @@ function LiipDrupalTranslationModule_modifyTranslationSource($source, array $dat
  * @param array $data
  * @throws \InvalidArgumentException
  */
-function LiipDrupalTranslationModule_storeTranslationSource(array $data)
+function drupaltranslationmodule_storeTranslationSource(array $data)
 {
     /** @var \Liip\Drupal\Modules\DrupalConnector\ConnectorFactory $factory  */
     $factory = new ConnectorFactory();
 
-    _LiipDrupalTranslationModule_verifyDataSet($data);
+    _drupaltranslationmoduleverifyDataSet($data);
 
-    if (_LiipDrupalTranslationModule_translation_source_exist($data['source'], $factory)) {
+    if (_drupaltranslationmodule_translation_source_exist($data['source'], $factory)) {
         throw new InvalidArgumentException('Translation source ('. $data['source'] .') already exists!');
     }
 
-    _LiipDrupalTranslationModule_addKey($data, $factory);
+    _drupaltranslationmodule_addKey($data, $factory);
 }
 
 /**
@@ -48,7 +50,7 @@ function LiipDrupalTranslationModule_storeTranslationSource(array $data)
  *
  * @param array $data
  */
-function _LiipDrupalTranslationModule_verifyDataSet(array $data)
+function _drupaltranslationmoduleverifyDataSet(array $data)
 {
     /** @var \Assert\Assertion $assertions  */
     $assertions = new Assertion();
@@ -64,13 +66,13 @@ function _LiipDrupalTranslationModule_verifyDataSet(array $data)
  *
  * @return bool
  */
-function _LiipDrupalTranslationModule_translation_source_exist($source, ConnectorFactory $factory)
+function _drupaltranslationmodule_translation_source_exist($source, ConnectorFactory $factory)
 {
-    $lid = _LiipDrupalTranslationModule_get_translation_source_lid($source, $factory);
+    $lid = _drupaltranslationmodule_get_translation_source_lid($source, $factory);
     return (false === $lid) ? false : true;
 }
 
-/**_LiipDrupalTranslationModule_get_translation_source_lid
+/**_drupaltranslationmodule_get_translation_source_lid
  * Provides the unique database identifier of the provided translation source.
  *
  * @param string $source
@@ -78,7 +80,7 @@ function _LiipDrupalTranslationModule_translation_source_exist($source, Connecto
  *
  * @return integer|false
  */
-function _LiipDrupalTranslationModule_get_translation_source_lid($source, ConnectorFactory $factory)
+function _drupaltranslationmodule_get_translation_source_lid($source, ConnectorFactory $factory)
 {
     /** @var $dcdb  */
     $dcdb = $factory->getDatabaseConnector();
@@ -101,12 +103,12 @@ function _LiipDrupalTranslationModule_get_translation_source_lid($source, Connec
  *
  * @return boolean
  */
-function _LiipDrupalTranslationModule_addKey(array $data, ConnectorFactory $factory)
+function _drupaltranslationmodule_addKey(array $data, ConnectorFactory $factory)
 {
     /** @var \Liip\Drupal\Modules\DrupalConnector\Database $dcdb  */
     $dcdb = $factory->getDatabaseConnector();
 
-    $data = _LiipDrupalTranslationModule_initFieldset($data);
+    $data = _drupaltranslationmodule_initFieldset($data);
 
     return $dcdb
         ->db_insert('locales_source')
@@ -123,17 +125,18 @@ function _LiipDrupalTranslationModule_addKey(array $data, ConnectorFactory $fact
 /**
  * Replaces a translation source in the drupal database.
  *
+ * @param string $source
  * @param array $data
  * @param Liip\Drupal\Modules\DrupalConnector\ConnectorFactory $factory
  *
  * @return boolean
  */
-function _LiipDrupalTranslationModule_replaceKey($source, array $data, ConnectorFactory $factory)
+function _drupaltranslationmodule_replaceKey($source, array $data, ConnectorFactory $factory)
 {
     /** @var \Liip\Drupal\Modules\DrupalConnector\Database $dcdb  */
     $dcdb = $factory->getDatabaseConnector();
 
-    $data = _LiipDrupalTranslationModule_initFieldset($data);
+    $data = _drupaltranslationmodule_initFieldset($data);
 
     return $dcdb
         ->db_update('locales_source')
@@ -154,7 +157,7 @@ function _LiipDrupalTranslationModule_replaceKey($source, array $data, Connector
  *
  * @throws \InvalidArgumentException
  */
-function _LiipDrupalTranslationModule_initFieldset(array $data)
+function _drupaltranslationmodule_initFieldset(array $data)
 {
     $default = array(
         'location' => null,
