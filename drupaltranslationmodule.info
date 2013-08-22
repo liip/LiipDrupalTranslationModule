@@ -4,3 +4,4 @@ package = Liip Drupal Modules
 core = 7.x
 php = 5.3
 version = 0.1
+dependencies[] = drupalconnectormodule
