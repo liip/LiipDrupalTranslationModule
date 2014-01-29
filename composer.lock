@@ -7,16 +7,16 @@
     "packages": [
         {
             "name": "beberlei/assert",
-            "version": "v1.5",
+            "version": "v1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/beberlei/assert.git",
-                "reference": "b01a2868fcebcefc14ce3ae240d5b2fbba1d7126"
+                "reference": "97515db6b6c8fb254f5c3ce5730cdfa5a1e3fbf4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/beberlei/assert/zipball/b01a2868fcebcefc14ce3ae240d5b2fbba1d7126",
-                "reference": "b01a2868fcebcefc14ce3ae240d5b2fbba1d7126",
+                "url": "https://api.github.com/repos/beberlei/assert/zipball/97515db6b6c8fb254f5c3ce5730cdfa5a1e3fbf4",
+                "reference": "97515db6b6c8fb254f5c3ce5730cdfa5a1e3fbf4",
                 "shasum": ""
             },
             "require": {
@@ -44,20 +44,20 @@
                 "assertion",
                 "validation"
             ],
-            "time": "2013-10-01 11:37:27"
+            "time": "2014-01-25 08:48:48"
         },
         {
             "name": "composer/installers",
             "version": "v1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/composer/installers",
-                "reference": "v1.0.0"
+                "url": "https://github.com/composer/installers.git",
+                "reference": "eae5f43226c8a3c7b98887c34287772cf227c275"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/composer/installers/archive/v1.0.0.zip",
-                "reference": "v1.0.0",
+                "url": "https://api.github.com/repos/composer/installers/zipball/eae5f43226c8a3c7b98887c34287772cf227c275",
+                "reference": "eae5f43226c8a3c7b98887c34287772cf227c275",
                 "shasum": ""
             },
             "replace": {
@@ -116,12 +116,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipDrupalConnectorModule.git",
-                "reference": "78233ec1ae4632df522a62875ef52f7419a4df00"
+                "reference": "93e338eeffa19074948534b51a9b4586010135a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipDrupalConnectorModule/zipball/78233ec1ae4632df522a62875ef52f7419a4df00",
-                "reference": "78233ec1ae4632df522a62875ef52f7419a4df00",
+                "url": "https://api.github.com/repos/liip/LiipDrupalConnectorModule/zipball/93e338eeffa19074948534b51a9b4586010135a0",
+                "reference": "93e338eeffa19074948534b51a9b4586010135a0",
                 "shasum": ""
             },
             "require": {
@@ -169,7 +169,7 @@
                 "software quality",
                 "testing"
             ],
-            "time": "2013-10-23 10:01:02"
+            "time": "2014-01-28 10:36:44"
         }
     ],
     "packages-dev": [

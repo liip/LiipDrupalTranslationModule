@@ -18,11 +18,30 @@ function drupaltranslationmodule_modifyTranslationSource($source, array $data)
 
     _drupaltranslationmodule_verifyDataSet($data);
 
+    $data = _drupaltranslationmodule_translation_complete_data($source, $data, $factory);
+
+    _drupaltranslationmodule_replaceKey($source, $data, $factory);
+}
+
+/**
+ * Completes the translation data set with information received from the database.
+ *
+ * @param string $source
+ * @param array $data
+ * @param ConnectorFactory $factory
+ *
+ * @throws InvalidArgumentException in case the translation was not found in the database.
+ * @return array
+ */
+function _drupaltranslationmodule_translation_complete_data($source, array $data, ConnectorFactory $factory)
+{
     if (! _drupaltranslationmodule_translation_source_exist($source, $factory)) {
         throw new InvalidArgumentException('Translation source ('. $source .') does not exists!');
     }
 
-    _drupaltranslationmodule_replaceKey($source, $data, $factory);
+    $dbRecord = _drupaltranslationmodule_get_translation_source($source, $factory);
+
+    return $data += $dbRecord;
 }
 
 /**
@@ -82,17 +101,24 @@ function _drupaltranslationmodule_translation_source_exist($source, ConnectorFac
  */
 function _drupaltranslationmodule_get_translation_source_lid($source, ConnectorFactory $factory)
 {
+    $result = _drupaltranslationmodule_get_translation_source($source, $factory);
+
+    return (!isset($result['lid'])) ? false : $result['lid'];
+}
+
+function _drupaltranslationmodule_get_translation_source($source, ConnectorFactory $factory)
+{
     /** @var $dcdb  */
     $dcdb = $factory->getDatabaseConnector();
 
     return $dcdb->db_query(
-        "SELECT lid
+        "SELECT *
           FROM {locales_source}
          WHERE source LIKE :source",
 
         array(':source' => $source)
 
-    )->fetchField();
+    )->fetchAssoc();
 }
 
 /**
