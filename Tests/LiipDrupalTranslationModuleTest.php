@@ -35,13 +35,15 @@ class LiipDrupalTranslationModuleTest extends LiipDrupalTranslationModuleTestCas
      */
     public function testTranslationSourceExists($expected, $lid)
     {
+        $data = array('lid' => $lid);
+
         $query = $this->getMockBuilder('\\stdClass')
-            ->setMethods(array('fetchField'))
+            ->setMethods(array('fetchAssoc'))
             ->getMock();
         $query
             ->expects($this->once())
-            ->method('fetchField')
-            ->will($this->returnValue($lid));
+            ->method('fetchAssoc')
+            ->will($this->returnValue($data));
 
         $dcdb = $this->getDrupalDatabaseConnectorMock(array('db_query'));
         $dcdb
