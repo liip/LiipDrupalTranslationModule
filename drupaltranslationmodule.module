@@ -58,7 +58,7 @@ function drupaltranslationmodule_storeTranslationSource(array $data)
     _drupaltranslationmodule_verifyDataSet($data);
 
     if (_drupaltranslationmodule_translation_source_exist($data['source'], $factory)) {
-        throw new InvalidArgumentException('Translation source ('. $data['source'] .') already exists!');
+        throw new InvalidArgumentException('Translation source ('. $data['source'] .') already exists!', 409);
     }
 
     _drupaltranslationmodule_addKey($data, $factory);
