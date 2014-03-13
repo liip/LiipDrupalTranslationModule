@@ -206,3 +206,49 @@ function _drupaltranslationmodule_initFieldset(array $data)
 
     return $data;
 }
+
+/**
+ * Gets all nodes in a given translation set.
+ *
+ * @param $tnid
+ *   The translation source nid of the translation set, the identifier of the
+ *   node used to derive all translations in the set.
+ *
+ * @return
+ *   Array of partial node objects (nid, title, language) representing all
+ *   nodes in the translation set, in effect all translations of node $tnid,
+ *   including node $tnid itself. Because these are partial nodes, you need to
+ *   node_load() the full node, if you need more properties. The array is
+ *   indexed by language code.
+ */
+function drupaltranslationmodule_node_get_translations($tnid, ConnectorFactory $factory)
+{
+    /** @var $dcdb  */
+    $dcdb = $factory->getDatabaseConnector();
+
+    /** @var $dcb  */
+    $dcb = $factory->getBootstrapConnector();
+
+    /** @var $dcc  */
+    $dcc = $factory->getCommonConnector();
+
+    if (is_numeric($tnid) && $tnid) {
+        $translations = & $dcb->drupal_static(__FUNCTION__, array());
+
+        if (!isset($translations[$tnid])) {
+            $translations[$tnid] = array();
+            $result = $dcdb->db_select('node', 'n')
+                ->fields('n', array('nid', 'type', 'uid', 'status', 'title', 'language'))
+                ->condition('n.tnid', $tnid)
+                ->addTag('node_access')
+                ->execute();
+
+            foreach ($result as $node) {
+                $langcode = $dcc->entity_language('node', $node);
+                $translations[$tnid][$langcode] = $node;
+            }
+        }
+
+        return $translations[$tnid];
+    }
+}
