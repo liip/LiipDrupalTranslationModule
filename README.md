@@ -31,5 +31,5 @@ $ git clone git://github.com/liip/liipdrupaltranslationmodule.git
 
 ## Dependencies
 
-- LiipDrupalConnector (http://github.com/liip/liipdrupalconnector)
+- LiipDrupalConnectorModule (https://github.com/liip/LiipDrupalConnectorModule)
 - Assert (http://github.com/beberlei/assert)
